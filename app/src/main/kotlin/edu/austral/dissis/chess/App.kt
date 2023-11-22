@@ -3,10 +3,13 @@
  */
 package edu.austral.dissis.chess
 
+import game.common.MyEngine
 import edu.austral.dissis.chess.gui.CachedImageResolver
 import edu.austral.dissis.chess.gui.DefaultImageResolver
-import edu.austral.dissis.chess.gui.GameView
-import edu.austral.dissis.chess.gui.SimpleGameEngine
+import edu.austral.dissis.chess.gui.createGameViewFrom
+import game.checkers.CheckersRules
+import game.chess.CapaBlancaRules
+import game.chess.ChessRules
 import javafx.application.Application
 import javafx.application.Application.launch
 import javafx.scene.Scene
@@ -18,19 +21,20 @@ fun main() {
 }
 
 class ChessGameApplication : Application() {
-    private val gameEngine = SimpleGameEngine()
+    private val gameEngine = MyEngine(CheckersRules())
     private val imageResolver = CachedImageResolver(DefaultImageResolver())
 
     companion object {
         const val GameTitle = "Chess"
     }
 
+
     override fun start(primaryStage: Stage) {
         primaryStage.title = GameTitle
-
-        val root = GameView(gameEngine, imageResolver)
+        val root = createGameViewFrom(gameEngine, imageResolver)
         primaryStage.scene = Scene(root)
-
+        root.handleInitialState(gameEngine.init())
         primaryStage.show()
+
     }
 }
