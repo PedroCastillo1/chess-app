@@ -14,11 +14,14 @@ class JumpMovementValidator(
         private val y: Int,
 ) : MovementValidator {
     override fun validate(movement: Movement, gameState: GameState): ResultMovement {
-        val auxX = abs(movement.to.column - movement.from.column)
-        val auxY = abs(movement.to.row - movement.from.row)
-        if ((auxX == x && auxY == y) || (auxX == y && auxY == x)) {
+        if (isMovementJumping(movement)) {
             return ValidMovementResult()
         }
         return InvalidMovementResult("Piece is not moving correctly")
+    }
+    private fun isMovementJumping(movement: Movement): Boolean {
+        val auxX = abs(movement.to.column - movement.from.column)
+        val auxY = abs(movement.to.row - movement.from.row)
+        return (auxX == x && auxY == y) || (auxX == y && auxY == x)
     }
 }

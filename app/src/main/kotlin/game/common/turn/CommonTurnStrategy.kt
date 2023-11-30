@@ -4,11 +4,11 @@ import game.common.piece.Colour
 import game.common.piece.Colour.*
 
 
-class BasicTurnStrategy(val colour: Colour) : TurnStrategy {
+class CommonTurnStrategy(val colour: Colour) : TurnStrategy {
     override fun advanceTurn(): TurnStrategy {
         when(colour){
-            WHITE -> return BasicTurnStrategy(BLACK)
-            BLACK -> return BasicTurnStrategy(WHITE)
+            WHITE -> return CommonTurnStrategy(BLACK)
+            BLACK -> return CommonTurnStrategy(WHITE)
         }
     }
 

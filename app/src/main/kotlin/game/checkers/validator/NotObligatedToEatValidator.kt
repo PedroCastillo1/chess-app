@@ -38,24 +38,31 @@ class NotObligatedToEatValidator : MovementValidator {
     override fun validate(movement: Movement, gameState: GameState): ResultMovement {
         val pieceList = gameState.getPieceMap().filter { it.value.colour == gameState.getCurrentColour() }
         for ((piecePosition, piece) in pieceList) {
-            for (i in 1..gameState.board.numCol) {
-                for (j in 1..gameState.board.numRow) {
-                    val toPosition = Position(i, j)
-                    val newMovement = Movement(toPosition, piecePosition)
-                    if (basicCheckersValidator.validate(newMovement, gameState) is ValidMovementResult) {
-                        if (piece.type == "PAWN") {
-                            if (eatDiagonalMvChecker.validate(newMovement, gameState) is ValidMovementResult) {
-                                return InvalidMovementResult("You have to eat")
-                            }
-                        } else {
-                            if (eatDiagonalMvCrowned.validate(newMovement, gameState) is ValidMovementResult) {
-                                return InvalidMovementResult("You have to eat")
-                            }
+            for (toPosition in generateMovementList(gameState)) {
+                val newMovement = Movement(toPosition, piecePosition)
+                if (basicCheckersValidator.validate(newMovement, gameState) is ValidMovementResult) {
+                    if (piece.type == "PAWN") {
+                        if (eatDiagonalMvChecker.validate(newMovement, gameState) is ValidMovementResult) {
+                            return InvalidMovementResult("You have to eat")
+                        }
+                    } else {
+                        if (eatDiagonalMvCrowned.validate(newMovement, gameState) is ValidMovementResult) {
+                            return InvalidMovementResult("You have to eat")
                         }
                     }
                 }
             }
         }
         return ValidMovementResult()
+    }
+    private fun generateMovementList(gameState: GameState): List<Position> {
+        val positionList = mutableListOf<Position>()
+        for (i in 1..gameState.board.numCol) {
+            for (j in 1..gameState.board.numRow) {
+                positionList.add(Position(i, j))
+            }
+        }
+        val list = positionList
+        return list
     }
 }

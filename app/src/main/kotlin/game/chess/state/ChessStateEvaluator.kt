@@ -1,10 +1,13 @@
 package game.chess.state
 
 import adt.*
+import game.chess.validator.BasicChessMovementValidator
 import game.common.GameState
+import game.common.board.Position
 import game.common.movement.Movement
 import game.common.piece.Colour
 import game.common.factory.BoardFactory
+import game.common.piece.Piece
 import game.common.state.StateEvaluator
 
 
@@ -32,7 +35,7 @@ class ChessStateEvaluator :
     private fun canAPieceMove(gameState: GameState): Boolean {
         val pieceList = gameState.getPieceMap().entries.filter { it.value.colour === gameState.getCurrentColour() }
         for (piece in pieceList) {
-            if (gameState.chessPieceHasAnyValidMovement(piece.value)) {
+            if (chessPieceHasAnyValidMovement(piece.value, gameState)) {
                 return true
             }
         }
@@ -69,6 +72,22 @@ class ChessStateEvaluator :
             return true
         }
 
+        return false
+    }
+
+    private fun chessPieceHasAnyValidMovement(piece: Piece, gameState: GameState): Boolean {
+        val fromPosition = gameState.board.pieceMap.filterKeys { it == gameState.getPositionByPieceID(piece.id) }.keys.first()
+        for (i in 1..gameState.board.numCol) {
+            for (j in 1..gameState.board.numRow) {
+                val toPosition = Position(i, j)
+                val auxMovement = Movement(toPosition, fromPosition)
+                if (BasicChessMovementValidator().validate(auxMovement, gameState) is ValidMovementResult) {
+                    if (piece.mv.validate(auxMovement, gameState) is ValidMovementResult) {
+                        return true
+                    }
+                }
+            }
+        }
         return false
     }
 
