@@ -97,7 +97,7 @@ class ChessStateEvaluator :
         if(newGameState.isKingThreaten(newGameState.getCurrentColour())){
             val pieceList = newGameState.getPieceMap().entries.filter { it.value.colour === newGameState.getCurrentColour() }
             for (piece in pieceList) {
-                if (newGameState.chessPieceHasAnyValidMovement(piece.value)) {
+                if (chessPieceHasAnyValidMovement(piece.value,newGameState)) {
                     return false
                 }
             }
