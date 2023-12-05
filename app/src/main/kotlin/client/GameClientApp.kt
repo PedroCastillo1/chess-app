@@ -1,4 +1,4 @@
-package game.client
+package client
 
 import edu.austral.dissis.chess.gui.CachedImageResolver
 import edu.austral.dissis.chess.gui.DefaultImageResolver

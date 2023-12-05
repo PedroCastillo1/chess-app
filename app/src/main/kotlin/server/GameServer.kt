@@ -1,4 +1,4 @@
-package game.server
+package server
 
 import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
 import edu.austral.dissis.chess.gui.GameOver

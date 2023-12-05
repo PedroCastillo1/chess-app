@@ -17,13 +17,13 @@ class ChessStateEvaluator :
     override fun validate(gameState: GameState): StateResult {
         if (isThereAWayOfMate(gameState)) {
             if (canAPieceMove(gameState)) {
-                if (isCheckMate(gameState)) {
+                return if (isCheckMate(gameState)) {
                     when (gameState.getCurrentColour()) {
-                        Colour.BLACK -> return WinStateResult(Colour.BLACK)
-                        Colour.WHITE -> return WinStateResult(Colour.WHITE)
+                        Colour.BLACK -> WinStateResult(Colour.BLACK)
+                        Colour.WHITE -> WinStateResult(Colour.WHITE)
                     }
                 }else{
-                    return InProgressStateResult()
+                    InProgressStateResult()
                 }
             }
             return TieStateResult("Stalemate")

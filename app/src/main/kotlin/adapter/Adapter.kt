@@ -1,7 +1,8 @@
-package game.common
+package adapter
 
 import game.common.board.Board
 import edu.austral.dissis.chess.gui.*
+import game.common.GameState
 import game.common.piece.Colour
 import game.common.movement.Movement
 import game.common.board.Position

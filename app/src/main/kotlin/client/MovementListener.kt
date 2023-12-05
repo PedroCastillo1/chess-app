@@ -1,4 +1,4 @@
-package game.client
+package client
 import edu.austral.dissis.chess.gui.GameEventListener
 import edu.austral.dissis.chess.gui.Move
 

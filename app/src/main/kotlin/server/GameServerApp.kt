@@ -1,4 +1,4 @@
-package game.server
+package server
 
 fun main() {
     val server = GameServer()

@@ -1,4 +1,4 @@
-package game.server
+package server
 
 import edu.austral.ingsis.clientserver.Message
 import edu.austral.ingsis.clientserver.MessageListener

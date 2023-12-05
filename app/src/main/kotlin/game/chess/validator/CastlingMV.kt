@@ -16,10 +16,10 @@ class CastlingMV() : MovementValidator {
 
     override fun validate(movement: Movement, gameState: GameState): ResultMovement {
         if (kingIsInValidPosition(movement, gameState)) {
-            if (isShortCastlin(movement)) {
-               return evaluateShortCastlin(movement, gameState)
+            return if (isShortCastlin(movement)) {
+                evaluateShortCastlin(movement, gameState)
             }else{
-                return evaluateLongCastling(movement, gameState)
+                evaluateLongCastling(movement, gameState)
             }
         }
         return InvalidMovementResult("Invalid movement")
@@ -123,10 +123,10 @@ class CastlingMV() : MovementValidator {
         } else {
             "RB$side"
         }
-        if(!gameState.getPieceMap().containsKey(position)){
-            return false
+        return if(!gameState.getPieceMap().containsKey(position)){
+            false
         }else{
-            return gameState.getPiece(position).id == idRook
+            gameState.getPiece(position).id == idRook
         }
     }
 

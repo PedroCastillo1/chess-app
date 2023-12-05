@@ -1,4 +1,4 @@
-package game.client
+package client
 
 import edu.austral.dissis.chess.gui.GameView
 import edu.austral.dissis.chess.gui.InitialState
@@ -40,7 +40,7 @@ class GameClient(private val gameView: GameView) {
 
     fun handleInitialState(payload: InitialState) {
         Platform.runLater {
-            gameView.handleInitialState(payload);
+            gameView.handleInitialState(payload)
         }
 
     }
